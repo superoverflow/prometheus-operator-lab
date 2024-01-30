@@ -17,6 +17,3 @@ spec:
     matchLabels:
       role: alert-rules
       prometheus: example
-  ruleNamespaceSelector:
-    matchLabels:
-      team: frontend
