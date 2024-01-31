@@ -1,5 +1,7 @@
 load('ext://secret', 'secret_yaml_generic')
 
+allow_k8s_contexts(['colima', 'docker-desktop'])
+
 def setup_sample_app():
     k8s_yaml([
         'k8s/sample-app/deployment.yaml',
@@ -34,10 +36,25 @@ def setup_prometheus_role():
         'k8s/prometheus/clusterRoleBinding.yaml',
     ])
 
+def provision_team1():
+    k8s_yaml([
+        'config/team1/prometheus.yaml',
+        'config/team1/prometheusRule.yaml',
+        'config/team1/service.yaml',
+    ])
+
+def provision_team2():
+    k8s_yaml([
+        'config/team2/prometheusRule.yaml',
+    ])
+
+
 def main():
     install_prometheus_operator()
     setup_prometheus_role()
     setup_sample_app()
     setup_alertmanager()
-
+    provision_team1()
+    provision_team2()
+    
 main()
